@@ -1,6 +1,7 @@
 ## 🐳 Running the Backend with Docker
 
 To run the backend server locally using Docker, follow these steps:
+Please make sure the .env should be exaclty same becuase the container running with bridge and api_server is accessing the db with service name
 
 ### 1️⃣ Start Docker Containers
 
@@ -64,7 +65,7 @@ Your backend API server should now be running and connected to the database.
 Access it locally at:
 
 ```
-http://localhost:8080
+http://localhost:8080/
 ```
 
 ---

@@ -36,7 +36,8 @@ lerna-debug.log*
 !.vscode/extensions.json
 
 # dotenv environment variable files
-.env
+# .env
+# removed .env from .gitginore because it don't cantain any critical data , to make it easy to setup made it public
 .env.development.local
 .env.test.local
 .env.production.local
