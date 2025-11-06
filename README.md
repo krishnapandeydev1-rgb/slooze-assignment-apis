@@ -77,8 +77,3 @@ http://localhost:8080
 | `docker-compose up`           | Start containers without rebuilding |
 | `docker exec -it nest_api sh` | Open a shell in the API container   |
 | `docker logs nest_api -f`     | View API container logs             |
-| `npx prisma studio`           | Open Prisma Studio (DB UI)          |
-
----
-
-Would you like me to include a short **troubleshooting section** for common Docker/Prisma errors (like connection or migration issues)? It can make your README more developer-friendly.
