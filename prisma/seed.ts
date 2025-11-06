@@ -120,45 +120,6 @@ async function main() {
     include: { menuItems: true },
   });
 
-  // ---------- Example Orders ----------
-  const order1 = await prisma.order.create({
-    data: {
-      userId: thanos.id,
-
-      totalAmount: 350,
-      status: OrderStatus.PAID,
-      country: Country.INDIA,
-      items: {
-        create: [
-          {
-            menuItemId: restaurantIndia.menuItems[0].id,
-            quantity: 1,
-            price: restaurantIndia.menuItems[0].price,
-          },
-        ],
-      },
-    },
-  });
-
-  const order2 = await prisma.order.create({
-    data: {
-      userId: travis.id,
-
-      totalAmount: 14,
-      status: OrderStatus.PENDING,
-      country: Country.AMERICA,
-      items: {
-        create: [
-          {
-            menuItemId: restaurantAmerica.menuItems[1].id,
-            quantity: 2,
-            price: restaurantAmerica.menuItems[1].price * 2,
-          },
-        ],
-      },
-    },
-  });
-
   console.log('✅ Seeding complete!');
 }
 

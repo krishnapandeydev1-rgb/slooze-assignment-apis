@@ -23,10 +23,10 @@ services:
       - .env
     depends_on:
       - db
-    command: sh -c "npx prisma migrate deploy && npm run start:dev"
-    volumes:
-      - .:/usr/src/app
-      - /usr/src/app/node_modules
+    command: sh -c "npm run start:dev"
+    # volumes:
+    #   - .:/usr/src/app
+    #   - /usr/src/app/node_modules
 
 volumes:
   pg_data:

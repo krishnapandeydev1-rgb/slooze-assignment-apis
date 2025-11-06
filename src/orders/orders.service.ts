@@ -127,9 +127,10 @@ export class OrdersService {
     id: string,
     user: { sub: string; role: Role; country: Country },
   ) {
-    let where: any = {};
-    if (user.role === 'MANAGER') where = { country: user.country };
-    else if (user.role === 'MEMBER') where = { userId: user.sub };
+    let where: any = { id: id };
+    if (user.role === 'MANAGER') where['country'] = user.country;
+    else if (user.role === 'MEMBER') where['userId'] = user.sub;
+    console.log({ where });
     const order = await this.prisma.order.findUnique({
       where,
       include: {

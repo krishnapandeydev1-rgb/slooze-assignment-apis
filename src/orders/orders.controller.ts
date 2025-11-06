@@ -51,6 +51,7 @@ export class OrdersController {
   @Get(':id')
   @Roles(Role.ADMIN, Role.MANAGER, Role.MEMBER)
   findOne(@Param('id') id: string, @Req() req) {
+    console.log({ id });
     return this.ordersService.findOne(id, req.user);
   }
 
