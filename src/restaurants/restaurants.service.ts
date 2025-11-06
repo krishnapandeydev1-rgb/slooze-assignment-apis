@@ -78,20 +78,11 @@ export class RestaurantsService {
     dto: CreateRestaurantDto,
     user: { role: Role; country: string },
   ) {
-    if (user.role === 'MEMBER')
-      throw new ForbiddenException('Members cannot create restaurants');
-
     // Managers can only create restaurants in their own country
     if (user.role === 'MANAGER' && dto.country !== user.country)
       throw new ForbiddenException(
         'Cannot create restaurant in another country',
       );
-
-    const existing = await this.prisma.restaurant.findFirst({
-      where: { name: dto.name, country: dto.country },
-    });
-    if (existing)
-      throw new BadRequestException('Restaurant with same name already exists');
 
     return this.prisma.restaurant.create({
       data: {

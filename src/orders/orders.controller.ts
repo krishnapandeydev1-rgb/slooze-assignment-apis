@@ -9,7 +9,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { OrdersService } from './orders.service';
-import { Role } from '@prisma/client';
+import { PaymentType, Role } from '@prisma/client';
 import { CreateOrderDto, UpdateOrderStatusDto } from './dtos';
 import { JwtAuthGuard } from 'src/common/guards/jwt-auth.guard';
 import { RolesGuard } from 'src/common/guards/role.guard';
@@ -22,14 +22,11 @@ export class OrdersController {
 
   /**
    * Create a new order
-   * - MEMBER → own orders only
    * - MANAGER → allowed (same country)
-   * - ADMIN → allowed (any country)
    */
   @Post()
-  @Roles(Role.ADMIN, Role.MANAGER, Role.MEMBER)
+  @Roles(Role.MEMBER)
   create(@Body() dto: CreateOrderDto, @Req() req) {
-    console.log(req.user);
     return this.ordersService.create(dto, req.user);
   }
 
@@ -79,8 +76,19 @@ export class OrdersController {
    * - ADMIN/MANAGER → allowed (their scope)
    */
   @Patch(':id/cancel')
-  @Roles(Role.ADMIN, Role.MANAGER, Role.MEMBER)
+  @Roles(Role.ADMIN, Role.MANAGER)
   cancel(@Param('id') id: string, @Req() req) {
     return this.ordersService.cancel(id, req.user);
+  }
+
+  @Patch(':id/pay')
+  @Roles(Role.MEMBER)
+  async payNow(
+    @Param('id') orderId: string,
+    @Body() dto: { type: PaymentType; details: any },
+    @Req() req: any,
+  ) {
+    const user = req.user; // from JWT guard
+    return this.ordersService.payNow(orderId, dto, user);
   }
 }

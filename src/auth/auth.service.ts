@@ -3,6 +3,7 @@ import { UsersService } from 'src/users/users.service';
 import { LoginDto } from './dtos';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import type { Response } from 'express';
 @Injectable()
 export class AuthService {
   constructor(
@@ -19,6 +20,17 @@ export class AuthService {
       email: user.email,
       role: user.role,
       country: user.country,
+      name: user.name,
     });
+  }
+  async logout(res: Response) {
+    // Clear cookie by setting it expired
+    res.clearCookie('access_token', {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+    });
+
+    return { message: 'Logged out successfully' };
   }
 }

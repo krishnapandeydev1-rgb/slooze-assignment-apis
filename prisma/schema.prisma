@@ -8,28 +8,27 @@ datasource db {
 }
 
 model User {
-  id          String          @id @default(uuid())
-  name        String
-  email       String          @unique
-  password    String
-  role        Role
-  country     Country
-  createdAt   DateTime        @default(now())
-  updatedAt   DateTime        @updatedAt
+  id             String          @id @default(uuid())
+  name           String
+  email          String          @unique
+  password       String
+  role           Role
+  country        Country
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
 
-  orders          Order[]
-  paymentMethods  PaymentMethod[]
+  orders         Order[]
+
 }
 
 model Restaurant {
   id          String      @id @default(uuid())
-  name        String
+  name        String      @unique
   country     Country
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
-
   menuItems   MenuItem[]
-  orders      Order[]
+
 }
 
 model MenuItem {
@@ -44,38 +43,35 @@ model MenuItem {
 model Order {
   id            String        @id @default(uuid())
   userId        String
-  restaurantId  String
   totalAmount   Float
   status        OrderStatus   @default(PENDING)
   country       Country
   createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
-
   user          User          @relation(fields: [userId], references: [id])
-  restaurant    Restaurant    @relation(fields: [restaurantId], references: [id])
   items         OrderItem[]
+  paymentMethod PaymentMethod?
 }
 
 model OrderItem {
-  id         String     @id @default(uuid())
-  orderId    String
-  menuItemId String
-  quantity   Int         @default(1)
-  price      Float
-
-  order      Order       @relation(fields: [orderId], references: [id])
-  menuItem   MenuItem    @relation(fields: [menuItemId], references: [id])
+  id            String      @id @default(uuid())
+  orderId       String
+  order         Order       @relation(fields: [orderId], references: [id])
+  menuItemId    String
+  menuItem      MenuItem    @relation(fields: [menuItemId], references: [id])
+  quantity      Int
+  price         Float
 }
 
 model PaymentMethod {
   id         String     @id @default(uuid())
-  userId     String
+  orderId    String     @unique
   type       PaymentType
   details    Json
   createdAt  DateTime   @default(now())
-
-  user       User       @relation(fields: [userId], references: [id])
+  
+  order      Order      @relation(fields: [orderId], references: [id])
 }
+
 
 enum Role {
   ADMIN

@@ -18,6 +18,7 @@ RUN npm run build
 
 # Expose port
 EXPOSE 3000
+EXPOSE 5555
 
 # Default command (can be overridden by docker-compose)
 CMD ["npm", "run", "start:dev"]

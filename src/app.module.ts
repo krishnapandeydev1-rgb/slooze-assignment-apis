@@ -7,6 +7,7 @@ import { UsersModule } from './users/users.module';
 import { ConfigModule } from '@nestjs/config';
 import { RestaurantsModule } from './restaurants/restaurants.module';
 import { OrdersModule } from './orders/orders.module';
+import { ItemsModule } from './items/items.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { OrdersModule } from './orders/orders.module';
     UsersModule,
     RestaurantsModule,
     OrdersModule,
+    ItemsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

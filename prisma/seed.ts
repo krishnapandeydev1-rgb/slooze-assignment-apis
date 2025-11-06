@@ -124,7 +124,7 @@ async function main() {
   const order1 = await prisma.order.create({
     data: {
       userId: thanos.id,
-      restaurantId: restaurantIndia.id,
+
       totalAmount: 350,
       status: OrderStatus.PAID,
       country: Country.INDIA,
@@ -143,7 +143,7 @@ async function main() {
   const order2 = await prisma.order.create({
     data: {
       userId: travis.id,
-      restaurantId: restaurantAmerica.id,
+
       totalAmount: 14,
       status: OrderStatus.PENDING,
       country: Country.AMERICA,
@@ -157,30 +157,6 @@ async function main() {
         ],
       },
     },
-  });
-
-  // ---------- Payment Methods ----------
-  await prisma.paymentMethod.createMany({
-    data: [
-      {
-        userId: admin.id,
-        type: PaymentType.CARD,
-        details: { cardNumber: '1234-5678-9012-3456', holder: 'Nick Fury' },
-      },
-      {
-        userId: managerIndia.id,
-        type: PaymentType.UPI,
-        details: { upiId: 'captainmarvel@upi' },
-      },
-      {
-        userId: managerAmerica.id,
-        type: PaymentType.CARD,
-        details: {
-          cardNumber: '9999-1111-2222-3333',
-          holder: 'Captain America',
-        },
-      },
-    ],
   });
 
   console.log('✅ Seeding complete!');
